@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Duel Overlay</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>body { margin: 0; padding: 0; background: transparent; }</style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="scoreboard" id="scoreboard">No duel yet</div>
+    <div class="game-zone">
+      <div class="duelist left-idle" id="leftDuelist"></div>
+      <div class="vs-text" id="countdownText">10</div>
+      <div class="duelist right-idle" id="rightDuelist"></div>
+    </div>
+  </div>
+  <audio id="walkSound" src="walk.mp3"></audio>
+  <audio id="fireSound" src="fire.mp3"></audio>
+  <script src="https://unpkg.com/comfy.js@latest/dist/comfy.min.js"></script>
+  <script src="duel.js"></script>
+</body>
+</html>
