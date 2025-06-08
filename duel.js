@@ -186,4 +186,4 @@ ComfyJS.onCommand = (user, command, message, flags, extra) => {
 };
 
 reset();
-ComfyJS.Init("YourTwitchUsername");
+ComfyJS.Init("mrbplease");
