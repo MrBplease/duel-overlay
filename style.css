@@ -5,6 +5,27 @@
   font-family: 'Georgia', serif;
   color: #fff8dc;
 }
+
+.challenge-text, .accept-text {
+  position: absolute;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px #000;
+  color: #fce8b0;
+  background: rgba(80, 80, 80, 0.5);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.challenge-text {
+  bottom: 30px;
+  left: 0;
+}
+
+.accept-text {
+  bottom: 30px;
+  right: 0;
+}
+
  /* 🟡 Countdown timer centered vertically and horizontally */
   #countdownText {
   position: absolute;
@@ -20,12 +41,11 @@
 
   /* 🟡 Scoreboard message centered at the bottom */
   #scoreboard {
-  width: 600 px;
+  width: 800 px;
   position: absolute;
   bottom: 5px;
   left: 50%;
-  align-items: center;
-  transform: translateX(-20%);
+  transform: translateX(-30%);
   background: rgba(80, 80, 80, 0.7);
   padding: 4px 10px;
   border-radius: 6px;
@@ -64,4 +84,7 @@
   font-weight: bold;
   text-align: center;
   min-width: 80px;
+}
+.hidden {
+  display: none;
 }

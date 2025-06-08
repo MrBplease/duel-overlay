@@ -8,9 +8,11 @@
   <style>body { margin: 0; padding: 0; background: transparent; }</style>
 </head>
 <body>
-  <div class="overlay">
-    <div class="scoreboard" id="scoreboard">No duel yet</div>
-    <div class="game-zone">
+  <div class="overlay hidden" id="overlay">
+     <div id="challengeText" class="challenge-text"></div>
+     <div id="acceptText" class="accept-text"></div>
+     <div class="scoreboard" id="scoreboard">No duel yet</div>
+      <div class="game-zone">
       <div class="duelist left-idle" id="leftDuelist"></div>
       <div class="vs-text" id="countdownText">10</div>
       <div class="duelist right-idle" id="rightDuelist"></div>
