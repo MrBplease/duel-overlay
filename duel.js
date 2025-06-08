@@ -9,6 +9,7 @@ let someoneFired = false;
 let countdown = 10;
 let intervalId = null;
 let fired = {};
+let acceptTimeoutId = null;
 
 // === TESTING ONLY ===
 document.addEventListener('keydown', (e) => {
@@ -59,7 +60,7 @@ function reset() {
 
 function moveApartStep(step) {
   const maxOffset = 300;
-  const offset = maxOffset - ((step / 10) * maxOffset);
+  const offset = maxOffset - ((step / 9) * maxOffset);
 
   left.style.transform = `translateX(${offset}px) scaleX(1)`;
   right.style.transform = `translateX(-${offset}px) scaleX(1)`;
@@ -111,37 +112,47 @@ function declareWinner(winner, loser, winnerSide, loserSide) {
   document.getElementById(`${winnerSide}Duelist`).className = `duelist ${winnerSide}-shoot`;
   document.getElementById(`${loserSide}Duelist`).className = `duelist ${loserSide}-fallen`;
 
-  scoreboard.textContent = `${winner} wins!`;
+  countdownText.textContent = `${winner} wins!`;
 
   setTimeout(reset, 5000);
 }
 
 ComfyJS.onCommand = (user, command, message, flags, extra) => {
-  if (command === 'duel' && !challenger && !defender) {
-    const target = message.split(' ')[0].replace('@', '');
-    challenger = user;
-    defender = target;
+ if (command === 'duel' && !challenger && !defender) {
+  const target = message.split(' ')[0].replace('@', '');
+  challenger = user;
+  defender = target;
 
-    scoreboard.textContent = `${challenger} vs ${defender}`;
-    countdownText.textContent = 'Awaiting acceptance...';
-    challengeText.textContent = `${challenger} is ready to fire`;
-    acceptText.textContent = `Awaiting ${defender}'s acceptance`;
-    overlay.classList.remove('hidden');
-  }
+  scoreboard.textContent = `${challenger} vs ${defender}`;
+  countdownText.textContent = 'Awaiting acceptance...';
+  challengeText.textContent = `${challenger} is ready to fire`;
+  acceptText.textContent = `Awaiting ${defender}'s acceptance`;
+  overlay.classList.remove('hidden');
 
-  if (command === 'accept' && user === defender && !duelStarted && !duelAccepted) {
-    left.style.transform = `translateX(300px) scaleX(1)`;
-    right.style.transform = `translateX(-300px) scaleX(1)`;
-    duelAccepted = true;
-    duelStarted = true;
-    challengeText.textContent = '';
+  // Set timeout to cancel if not accepted in 10 seconds
+  acceptTimeoutId = setTimeout(() => {
+    if (!duelAccepted) {
+      countdownText.textContent = `${defender} is absent — no challenge`;
+      scoreboard.textContent = 'Duel cancelled';
+      setTimeout(reset, 5000);
+    }
+  }, 8000); // 8 seconds
+}
+
+if (command === 'accept' && user === defender && !duelStarted && !duelAccepted) {
+  clearTimeout(acceptTimeoutId);
+  acceptTimeoutId = null;
+
+  duelAccepted = true;
+  duelStarted = true;
+  challengeText.textContent = '';
+  acceptText.textContent = '';
+  countdownText.textContent = 'All Parties Accept Terms';
+  setTimeout(() => {
     acceptText.textContent = '';
-    countdownText.textContent = 'All Parties Accept Terms';
-    setTimeout(() => {
-      acceptText.textContent = '';
-      startDuel(challenger, defender);
-    }, 2000);
-  }
+    startDuel(challenger, defender);
+  }, 2000);
+}
 
   if (command === 'fire' && duelStarted && duelAccepted) {
     if (!fireReady && !someoneFired) {
